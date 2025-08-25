@@ -20,9 +20,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ChatService {
     RoomRepository roomRepository;
+    KafkaProducerService kafkaProducerService;
 
     @Autowired
-    public ChatService(RoomRepository roomRepository){this.roomRepository=roomRepository;
+    public ChatService(RoomRepository roomRepository,KafkaProducerService kafkaProducerService){this.roomRepository=roomRepository;
+        this.kafkaProducerService=kafkaProducerService;
     }
 
     public Message sendMessage(MessageRequest messageRequest,String roomId){
@@ -31,10 +33,9 @@ public class ChatService {
          message.setContent(messageRequest.getContent());
          message.setTimestamp(LocalDateTime.now());
          message.setSender(messageRequest.getSender());
+         message.setRoomid(roomId);
 
-         //save in DB;
-         room.getMessages().add(message);
-         roomRepository.save(room);
+         kafkaProducerService.sendMessage(message);
 
          return message;
     }

@@ -1,17 +1,19 @@
-package com.example.Chatfinal.entities;
+package com.example.writer_service.entity;
 
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
-
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Message {
-    private String roomid;
+    private String roomId;
     private String sender;
     private String content;
     private LocalDateTime timestamp;
@@ -22,5 +24,3 @@ public class Message {
         this.timestamp=LocalDateTime.now();
     }
 }
-
-//gotta study this LocalDateTime in java: asked in mastercard iw;
